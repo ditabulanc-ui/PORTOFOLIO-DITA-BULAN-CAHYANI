@@ -119,7 +119,7 @@
             font-weight: 500;
         }
 
-        /* Tampilan Foto Bukti Kegiatan */
+        /* Tampilan Foto & Video Bukti Kegiatan */
         .evidence-gallery {
             display: flex;
             gap: 10px;
@@ -127,17 +127,57 @@
             flex-wrap: wrap;
         }
 
-        .evidence-gallery img {
+        .evidence-gallery img, .evidence-gallery video {
             width: 120px;
             height: 80px;
             object-fit: cover;
             border-radius: 6px;
             border: 1px solid #cbd5e1;
             transition: transform 0.2s;
+            cursor: pointer; /* Mengubah kursor jadi bentuk tangan saat diarahkan ke foto */
         }
 
         .evidence-gallery img:hover {
             transform: scale(1.05);
+        }
+
+        /* Styling Efek Pop-up / Pembesar Foto (Lightbox) */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none; /* Sembunyi secara default */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .lightbox-overlay img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         /* Grid Skill */
@@ -159,8 +199,10 @@
             margin-bottom: 5px;
         }
 
-        ul {
+        .skill-card ul {
             margin-left: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
         footer {
@@ -192,6 +234,7 @@
             <h2>Pengalaman & Jurnal Kegiatan</h2>
             <div class="timeline">
 
+                <!-- Item 1 -->
                 <div class="timeline-item">
                     <span class="date">2025 - Sekarang</span>
                     <div class="project-title">HIMA Promosi Kesehatan - Bidang Kominfo (Media Kreatif)</div>
@@ -200,19 +243,19 @@
                         <span class="tag">Desain Grafis</span>
                         <span class="tag">Edukasi Kesehatan</span>
                     </div>
-                    <!-- Foto Bukti Kegiatan -->
                     <div class="evidence-gallery">
                         <img src="foto-hima1.jpg.jpeg" alt="Bukti Desain 1">
                         <img src="foto-hima2.jpg.jpeg" alt="Bukti Desain 2">
-			<img src="foto-hima3.jpg.jpeg" alt="Bukti Desain 3">
-			<img src="foto-hima4.jpg.jpeg" alt="Bukti Desain 4">
-			<img src="foto-hima5.jpg.jpeg" alt="Bukti Desain 5">
-			<img src="mc-pkkmb1.jpg.jpeg" alt="Bukti Kegiatan 1">
-			<img src="mc-pkkmb2.jpg.jpeg" alt="Bukti Kegiatan 2">
-			<img src="mc-pkkmb3.jpg.jpeg" alt="Bukti Kegiatan 3">
+                        <img src="foto-hima3.jpg.jpeg" alt="Bukti Desain 3">
+                        <img src="foto-hima4.jpg.jpeg" alt="Bukti Desain 4">
+                        <img src="foto-hima5.jpg.jpeg" alt="Bukti Desain 5">
+                        <img src="mc-pkkmb1.jpg.jpeg" alt="Bukti Kegiatan 1">
+                        <img src="mc-pkkmb2.jpg.jpeg" alt="Bukti Kegiatan 2">
+                        <img src="mc-pkkmb3.jpg.jpeg" alt="Bukti Kegiatan 3">
                     </div>
                 </div>
 
+                <!-- Item 2 -->
                 <div class="timeline-item">
                     <span class="date">2023 - Sekarang</span>
                     <div class="project-title">Duta GenRe Kab. Bandung & Juara Jawa Barat 2025 (Media Sosial Inspirator)</div>
@@ -223,89 +266,32 @@
                     </div>
                     <div class="evidence-gallery">
                         <img src="foto-genre1.jpg.JPG" alt="Penghargaan JABAR 25">
-			<img src="foto-genre2.jpg.JPG" alt="Penghargaan JABAR 25">
-			<img src="foto-genre3.jpg.JPG" alt="Penghargaan JABAR 25">
-			<img src="foto-genre4.jpg.png" alt="RS to teman kanker">
-			<img src="foto-genre5.jpg.png" alt="RS to teman Thalla">
-			<img src="video-genre1.mp4.mp4" alt="temen Thalla">
-			<img src="video-genere2.mp4.mp4" alt="to emak abah JABAR">
+                        <img src="foto-genre2.jpg.JPG" alt="Penghargaan JABAR 25">
+                        <img src="foto-genre3.jpg.JPG" alt="Penghargaan JABAR 25">
+                        <img src="foto-genre4.jpg.png" alt="RS to teman kanker">
+                        <img src="foto-genre5.jpg.png" alt="RS to teman Thalla">
+                        <video src="video-genre1.mp4.mp4" controls></video>
+                        <video src="video-genere2.mp4.mp4" controls></video>
                     </div>
                 </div>
 
+                <!-- Item 3 -->
                 <div class="timeline-item">
                     <span class="date">2024 - Sekarang</span>
                     <div class="project-title">Founder Komunitas "Ruang Akrab" & Inisiator BIM Card</div>
-                    <p>Membangun wadah berbagi cerita dan belajar untuk anak muda. Menciptakan **BIM Card (Kartu Bantu Membaca)** berbasis metode visual warna untuk literasi anak, serta bekerjasama dengan LPK untuk akses sekolah Paket A, B, C dan bahasa asing bagi anak jalanan.</p>
+                    <p>Membangun wadah berbagi cerita dan belajar untuk anak muda. Menciptakan BIM Card (Kartu Bantu Membaca) berbasis metode visual warna untuk literasi anak, serta bekerjasama dengan LPK untuk akses sekolah Paket A, B, C dan bahasa asing bagi anak jalanan.</p>
                     <div class="tags">
                         <span class="tag">Inovasi Literasi</span>
                         <span class="tag">Pemberdayaan Masyarakat</span>
                     </div>
                     <div class="evidence-gallery">
                         <img src="foto-bimcard.jpg" alt="Foto BIM Card">
-			<img src="foto-bimcard2.jpg.jpg" alt="Dokumentasi BIM card">
-			<img src="foto-ruangakrab1.jpg.png" alt="Ruangakrab mengajar">
-			<img src="foto-ruangakrab2.jpg.png" alt="Ruangakrab mengajar">
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <span class="date">2024</span>
-                    <div class="project-title">Panitia Indonesia Youth Festival (DPR RI)</div>
-                    <p>Terpilih menjadi 1 dari 5 perwakilan pemuda Kabupaten Bandung untuk mengelola wadah penyampaian aspirasi anak muda di Gedung DPR RI.</p>
-                    <div class="tags">
-                        <span class="tag">Leadership</span>
-                        <span class="tag">Event Organizing</span>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <span class="date">Wirausaha</span>
-                    <div class="project-title">Founder D'LUF (Food & Beverage)</div>
-                    <p>Mengelola bisnis kuliner mandiri dengan produk unggulan Tiramisu yang diproduksi hingga ~100 pcs per hari.</p>
-                    <div class="tags">
-                        <span class="tag">Entrepreneurship</span>
-                        <span class="tag">Manajemen Bisnis</span>
+                        <img src="foto-bimcard2.jpg.jpg" alt="Dokumentasi BIM card">
+                        <img src="foto-ruangakrab1.jpg" alt="Dokumentasi Ruang Akrab">
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- Keahlian & Minat Lainnya -->
-        <section>
-            <h2>Keahlian & Minat Kreatif</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Komunikasi & Seni</h3>
-                    <p>Public Speaking (MC), Koreografer Tari Tradisional, English Conversation.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Kreatif & Desain</h3>
-                    <p>Desain Grafis, Menggambar & Melukis, Menjahit, serta Merajut.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Kepemimpinan</h3>
-                    <p>Wakil Ketua OSIS SMA, Ketua Umum Paskibra & Sekbid OSIS SMP, Pelatih Seni Silat.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Kontak -->
-        <section>
-            <h2>Kontak & Media Sosial</h2>
-            <p>Mari terhubung dan berkolaborasi:</p>
-            <ul style="margin-top: 10px;">
-                <li>Email: <a href="mailto:ditabulanc@gmail.com">ditabulanc@gmail.com</a></li>
-                <li>Instagram: <a href="https://instagram.com/bulananita.3" target="_blank">@bulananita.3</a></li>
-                <li>LinkedIn: Dita Bulan Cahyani</li>
-            </ul>
-        </section>
-
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Dita Bulan Cahyani - Portofolio Pribadi</p>
-    </footer>
-
-</body>
-</html>
+        <!-- Bagian Keahlian / Keterampilan -->
